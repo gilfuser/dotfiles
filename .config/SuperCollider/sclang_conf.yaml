@@ -1,0 +1,10 @@
+includePaths:
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/JITLibExtensions
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/Vowel
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/Dirt-Samples
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/SuperDirt
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/adclib
+    -   /home/gilfuser/.local/share/SuperCollider/downloaded-quarks/Esp
+excludePaths:
+    -   /home/gilfuser/.local/share/SuperCollider/Extensions/scvim
+postInlineWarnings: false

@@ -1,0 +1,8 @@
+CAMPO ~/CAMPO/sessions
+config_neovim ~/.dotfiles/init.vim
+livecode ~/livecode-this
+tidal_cheatsheet ~/tidal/cheatsheet
+tidal_snippets ~/.dotfiles/plugged/ultisnips/UltiSnips/tidal.snippets
+tidalvim_config ~/.dotfiles/plugged/vim-tidal/Tidal.ghci
+SuperCollider ~/.local/share/SuperCollider
+

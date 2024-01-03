@@ -1,0 +1,3 @@
+[submodule "builds/dotfiles/.config/SuperCollider/startup_files"]
+	path = builds/dotfiles/.config/SuperCollider/startup_files
+	url = https://github.com/gilfuser/startup_files

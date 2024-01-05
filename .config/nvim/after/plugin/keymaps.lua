@@ -169,13 +169,18 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc =
 -- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 -- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-map("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true })
-map("n", "<c-s>", ":SCNvimExt fzf-sc.fuzz<CR>", { silent = true })
-map("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true })
-map("n", "<leader>cm", ":Telescope commands<CR>", { noremap = true })
-map("n", "<leader>cl", ":Telescope colorscheme<CR>", { noremap = true })
-map("n", "<leader>km", ":Telescope keymaps<CR>", { noremap = true })
-map("n", "<leader>ts", ":Telescope treesitter<CR>", { noremap = true })
+-- map("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true }) -- not working
+map("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true, desc = '[F]ile [B]rowser' })
+map("n", "<leader>cm", ":Telescope commands<CR>", { noremap = true, desc = '[C]o[M]mands' })
+map("n", "<leader>cl", ":Telescope colorscheme<CR>", { noremap = true, desc = '[C]o[L]ors' })
+map("n", "<leader>km", ":Telescope keymaps<CR>", { noremap = true, desc = '[K]ey[M]aps' })
+map("n", "<leader>ts", ":Telescope treesitter<CR>", { noremap = true, desc = '[T]ree[S]itter' })
+map('n', '<leader>sf', ":Telescope find_files<CR>", { noremap = true, desc = '[S]earch [F]iles' })
+map('n', '<leader>sh', "Telescope help_tags<CR>", { noremap = true, desc = '[S]earch [H]elp' })
+map('n', '<leader>sw', "Telescope grep_string<CR>", { noremap = true, desc = '[S]earch current [W]ord' })
+map('n', '<leader>sg',  "Telescope live_grep<CR>", { noremap = true, desc = '[S]earch by [G]rep' })
+map('n', '<leader>sd', "Telescope diagnostics<CR>", { noremap = true, desc = '[S]earch [D]iagnostics' })
+
 
 -- /////////////////// Hop //////////////////////// --
 
@@ -203,7 +208,19 @@ map("n", "<M-/>", "<CMD>HopPattern<CR>", { desc = 'HopPattern is like neovim sea
 
 map("", "<C-Esc>",  "<CMD>TidalParagraphSend<CR>")
 
---[[   if !hasmapto('<Plug>TidalParagraphSend', 'n')
-    nmap <buffer> <localleader>ss <Plug>TidalParagraphSend
-    nmap <buffer> <c-e> <Plug>TidalParagraphSend
-  endif ]]
+local harpoon = require("harpoon")
+
+-- HARPOON
+harpoon:setup({})
+
+map("n", "<leader>a", function() harpoon:list():append() end,{ remap = true, desc = "harpoon append to list (I think)" })
+map("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+map("n", "<M-u>", function() harpoon:list():select(1) end)
+map("n", "<M-i>", function() harpoon:list():select(2) end)
+map("n", "<M-o>", function() harpoon:list():select(3) end)
+map("n", "<M-p>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+map("n", "<C-S-P>", function() harpoon:list():prev() end)
+map("n", "<C-S-N>", function() harpoon:list():next() end)

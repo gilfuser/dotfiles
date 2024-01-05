@@ -17,13 +17,13 @@ require('onedark').setup {
 vim.g.forestbones = { solid_line_nr = true, darken_comments = 45 }
 
 -- local function scstatus()
--- 	if vim.bo.filetype == "supercollider" then
--- 		local stat = vim.fn["scnvim#statusline#server_status"]()
--- 		stat = stat:gsub("%%", "♪")
--- 		return stat
--- 	else
--- 		return ""
--- 	end
+--    if vim.bo.filetype == "supercollider" then
+--        local stat = vim.fn["scnvim#statusline#server_status"]()
+--        stat = stat:gsub("%%", "♪")
+--        return stat
+--    else
+--        return ""
+--    end
 -- end
 
 --               ////////////// SCNvim ///////////////
@@ -77,12 +77,36 @@ vim.g.tidal_boot = "/home/skmecs/BootTidal.ghci"
 local null_ls = require("null-ls")
 
 null_ls.setup {
-	sources = {
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.completion.spell,
-	},
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+    },
 }
+--
+-- HARPOON
+--
+local harpoon = require("harpoon")
+harpoon:setup({})
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+    local file_paths = {}
+    for _, item in ipairs(harpoon_files.items) do
+        table.insert(file_paths, item.value)
+    end
+
+    require("telescope.pickers").new({}, {
+        prompt_title = "Harpoon",
+        finder = require("telescope.finders").new_table({
+            results = file_paths,
+        }),
+        previewer = conf.file_previewer({}),
+        sorter = conf.generic_sorter({}),
+    }):find()
+end
+
+vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
+    { desc = "Open harpoon window" })
 
 -- You don't need to set any of these options.
 -- IMPORTANT!: this is only a showcase of how you can set default options!
@@ -110,3 +134,4 @@ require("telescope").load_extension("file_browser")
 vim.cmd [[let g:instant_username = "skmecs"]]
 
 require 'colorizer'.setup()
+

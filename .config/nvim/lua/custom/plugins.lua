@@ -60,5 +60,11 @@ return function(use)
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use ('doxnit/cmp-luasnip-choice')
   use { 'norcalli/nvim-colorizer.lua' }
+  use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
+  use {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    requires = { {"nvim-lua/plenary.nvim"} }
+  }
 end
 

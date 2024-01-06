@@ -1,10 +1,10 @@
 /****
 /// Redirection file written by StartupFile quark.
 /// open destination file with:
-Document.open("/home/skmecs/.config/SuperCollider/startup_files/00_start_toba.scd");
-StartupFile.open('00_start_toba');
+Document.open("/home/skmecs/.config/SuperCollider/startup_files/startup_minimal.scd");
+StartupFile.open('startup_minimal');
 /// choose or open files:
 StartupFile.dialog;
 ***************************/
 
-StartupFile.redirectLoad('00_start_toba');
+StartupFile.redirectLoad('startup_minimal');

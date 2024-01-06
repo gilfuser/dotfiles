@@ -38,7 +38,6 @@ end)
 
 scnvim.setup {
 	keymaps = {
-		["<M-e>"] = map("editor.send_line", { "i", "n" }),
 		-- ["<localleader><Esc>"] = map("editor.send_line", { "i", "n" }),
 		["<leader><Esc>"] = {
 			map("editor.send_block", { "i", "n" }),
@@ -73,6 +72,7 @@ scnvim.setup {
 -- vim.g.tidal_target = "tmux"
 vim.g.tidal_no_mappings = 1
 vim.g.tidal_boot = "/home/skmecs/BootTidal.ghci"
+vim.g.tidal_target = "terminal"
 
 local null_ls = require("null-ls")
 
@@ -87,7 +87,7 @@ null_ls.setup {
 -- HARPOON
 --
 local harpoon = require("harpoon")
-harpoon:setup({})
+harpoon:setup()
 local conf = require("telescope.config").values
 local function toggle_telescope(harpoon_files)
     local file_paths = {}
@@ -106,7 +106,7 @@ local function toggle_telescope(harpoon_files)
 end
 
 vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
-    { desc = "Open harpoon window" })
+    { desc = "Open harpoon telescope" })
 
 -- You don't need to set any of these options.
 -- IMPORTANT!: this is only a showcase of how you can set default options!

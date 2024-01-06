@@ -206,15 +206,20 @@ map("", "<M-w>", "<CMD>HopWordCurrentLine<CR>", { desc = 'hop hint [w]ords in cu
 map("n", "<M-W>", "<CMD>HopWord<CR>", { desc = 'hop hint all [W]ords in current buffer' })
 map("n", "<M-/>", "<CMD>HopPattern<CR>", { desc = 'HopPattern is like neovim search "/"' })
 
-map("", "<C-Esc>",  "<CMD>TidalParagraphSend<CR>")
+-- SuperCollider, SCNvim
+local scnvim = require("scnvim")
+map("", "<localleader><Esc>", function() vim.cmd.write() scnvim.map("editor.send_line") end , {desc="SuperCollider send line and save"})
+
+-- Tidal
+map("", "<leader><Esc>", function () vim.cmd.write() vim.cmd(':execute "normal \\<Plug>TidalParagraphSend" ') end )
 
 local harpoon = require("harpoon")
 
 -- HARPOON
 harpoon:setup({})
 
-map("n", "<leader>a", function() harpoon:list():append() end,{ remap = true, desc = "harpoon append to list (I think)" })
-map("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+map("n", "<M-a>", function() harpoon:list():append() end, {desc="Mark file to harpoon"})
+map("n", "<M-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, {desc="open harpoon UI"})
 
 map("n", "<M-u>", function() harpoon:list():select(1) end)
 map("n", "<M-i>", function() harpoon:list():select(2) end)

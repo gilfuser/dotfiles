@@ -28,20 +28,20 @@ require('packer').startup(function(use)
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    requires = { 
-      'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 
-      'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua', 
-      'hrsh7th/cmp-cmdline', 'onsails/lspkind.nvim' 
+    requires = {
+      'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-cmdline', 'onsails/lspkind.nvim'
     }
   }
---[[ use {
+use {
   'doxnit/cmp-luasnip-choice',
   config = function()
     require('cmp_luasnip_choice').setup({
         auto_open = true, -- Automatically open nvim-cmp on choice node (default: true)
     });
   end,
-} ]]
+}
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
@@ -243,8 +243,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        --[[ ['<C-u>'] = true,
+        ['<C-d>'] = true, ]]
       },
     },
   },
@@ -260,7 +260,7 @@ vim.keymap.set('n', '<leader>f', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
-    previewer = false,
+    previewer = true,
   })
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
@@ -384,13 +384,15 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
+  -- 'sumneko_lua',
+  'clangd'
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
-  --[[ sumneko_lua = {
+  --[[ 'sumneko_lua' = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
@@ -412,7 +414,7 @@ require('mason').setup()
 local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = servers, -- vim.tbl_keys(servers),
 }
 
 mason_lspconfig.setup_handlers {
@@ -441,10 +443,11 @@ require('lspconfig').lua_ls.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 -- nvim-cmp setup
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+-- local cmp = require 'cmp'
+-- local luasnip = require 'luasnip'
 -- local lspkind = require('lspkind')
-
+-- local select_opts = {behavior = cmp.SelectBehavior.Select}
+--[[
  cmp.setup {
   -- entries = {name = 'custom', selection_order = 'near_cursor' },
   snippet = {
@@ -463,7 +466,71 @@ local luasnip = require 'luasnip'
           and not context.in_syntax_group("Comment")
       end
     end,
-  mapping = cmp.mapping.preset.insert {
+  formatting = {
+    fields = {'menu', 'abbr', 'kind'},
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        luasnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
+
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
+  },
+  mapping = {
+    ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+
+    ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+    ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<C-y>'] = cmp.mapping.confirm({select = true}),
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+
+    ['<C-f>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+
+    ['<C-b>'] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      local col = vim.fn.col('.') - 1
+
+      if cmp.visible() then
+        cmp.select_next_item(select_opts)
+      elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        fallback()
+      else
+        cmp.complete()
+      end
+    end, {'i', 's'}),
+
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item(select_opts)
+      else
+        fallback()
+      end
+    end, {'i', 's'}),
+  },
+  --[[ mapping = cmp.mapping.preset.insert {
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -484,7 +551,7 @@ local luasnip = require 'luasnip'
       end
     end, {"i","s","c",}),
 
-    ['<C-j>'] = cmp.mapping(function(fallback)
+    ['<C-J>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -493,7 +560,7 @@ local luasnip = require 'luasnip'
         fallback()
       end
     end, { 'i', 's' }),
-    ['<C-k>'] = cmp.mapping(function(fallback)
+    ['<C-K>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -505,8 +572,9 @@ local luasnip = require 'luasnip'
     -- ["<tab>"] = cmp.config.disable,
   },
   sources = {
-    { name = 'luasnip-choice' },
-    { name = 'luasnip', keyword_length = 3},
+    -- { name = 'luasnip-choice' },
+    { name = 'luasnip', keyword_length = 3, option = { use_show_condition = false } },
+    -- { name = 'luasnip', keyword_length = 3},
     { name = 'buffer', keyword_length = 4 },
     { name = 'nvim_lsp',keyword_length = 3,
     entry_filter = function(entry, ctx)
@@ -516,13 +584,14 @@ local luasnip = require 'luasnip'
     { name = 'path' },
   },
     window = {
+    documentation = cmp.config.window.bordered(),
     completion = {
       winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
       col_offset = -3,
       side_padding = 0,
     },
   },
-  formatting = {
+    formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
@@ -567,3 +636,4 @@ cmp.setup.cmdline(':', {
       }
     })
 })
+]]

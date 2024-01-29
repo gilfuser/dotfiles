@@ -19,10 +19,10 @@ local fmta = require("luasnip.extras.fmt").fmta
 -- local types = require("luasnip.util.types")
 
 local som = {
-	"ul", "can", "gabba", "bass1", "feel", "bottle", "less", "popkick", "moog", "kicklinn", "mt", "808sd", "cr", "bend",
-	"numbers", "control", "pad", "made2", "dr2", "dorkbot", "808lt", "birds3", "auto", "msg", "dr_few", "haw", "speedupdown",
-	"blue", "jungbass", "fire", "breaks152", "gab", "lt", "wobble", "bassdm", "metal", "hc", "drumtraks", "foo", "led", "808mt",
-	"hand", "h", "ht", "tablex", "sine", "808", "e", "wind", "rave2", "latibro", "808lc", "tink", "blip", "crow", "made", "bd",
+    "ul", "can", "gabba", "bass1", "feel", "bottle", "less", "popkick", "moog", "kicklinn", "mt", "808sd", "cr", "bend",
+    "numbers", "control", "pad", "made2", "dr2", "dorkbot", "808lt", "birds3", "auto", "msg", "dr_few", "haw", "speedupdown",
+    "blue", "jungbass", "fire", "breaks152", "gab", "lt", "wobble", "bassdm", "metal", "hc", "drumtraks", "foo", "led", "808mt",
+    "hand", "h", "ht", "tablex", "sine", "808", "e", "wind", "rave2", "latibro", "808lc", "tink", "blip", "crow", "made", "bd",
 	"speechless", "yeah", "alphabet", "rs", "baa", "jungle", "house", "glasstap", "perc", "incoming", "808hc", "em2", "jvbass",
 	"dork2", "mash2", "coins", "dist", "ab", "peri", "monsterb", "ulgab", "voodoo", "casio", "toys", "bass3", "tok", "subroc3d",
 	"electro1", "909", "bev", "sheffield", "808oh", "procshort", "808ht", "sundance", "oc", "off", "sf", "battles", "gabbaloud",
@@ -38,7 +38,7 @@ local som = {
 }
 
 local rand = function(indi)
-	return (math.random(1, #indi))
+    return (math.random(1, #indi))
 end
 
 local myTable = {} -- original table (created somewhere)
@@ -95,7 +95,7 @@ return {
 	s( { trig = "dd1", snippetType = "autosnippet" }, fmta(
 		[[
 		d1 $ <>"<>"
-			<>
+		    <>
 		]],
 		{ i(1), c(2, { f(choose_sound), i(1,"") }), i(3, "# amp 0.1"), }
 	) ),

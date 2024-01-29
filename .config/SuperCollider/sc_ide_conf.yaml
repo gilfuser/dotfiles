@@ -194,14 +194,13 @@ IDE:
       help-dock: ""
       post-dock: ""
     geometry: AdnQywADAAAAAAAAAAAAAAAABf8AAANfAAADAAAAAB4AAAX/AAADXwAAAAACAAAABgAAAAAAAAAAHgAABf8AAANf
-    state: AAAA/wAAAAD9AAAAAgAAAAAAAAD8AAADCvwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawAAAAAXAAADCgAAAGQA////AAAAAQAAAf8AAAMK/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAFwAAAkcAAABSAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAl8AAADCAAAAUgD///8AAAQAAAADCgAAAAEAAAACAAAAAQAAAAL8AAAAAA==
+    state: AAAA/wAAAAD9AAAAAgAAAAAAAAD8AAADCvwCAAAAAfsAAAAcAGQAbwBjAHUAbQBlAG4AdABzAC0AZABvAGMAawAAAAAXAAADCgAAAGQA////AAAAAQAAAf8AAAMK/AIAAAAC+wAAABIAaABlAGwAcAAtAGQAbwBjAGsBAAAAFwAAAXMAAABSAP////sAAAASAHAAbwBzAHQALQBkAG8AYwBrAQAAAYsAAAGWAAAAUgD///8AAAQAAAADCgAAAAEAAAACAAAAAQAAAAL8AAAAAA==
   postWindow:
     lineWrap: true
     scrollback: 99999
   recentDocuments: !QVariantList
-    - /media/skmecs/TOSHIBA EXT/SuperCollider/liveCodeThis/AlgoraveBR_SolticioVerao2021/mpk-Modality.scd
-    - /home/skmecs/SuperCollider/libs/allesAnAlle.scd
     - /home/skmecs/SuperCollider/libs/_SynthLib.scd
+    - /home/skmecs/SuperCollider/libs/allesAnAlle.scd
     - /home/skmecs/.config/SuperCollider/startup_files/startup_Mafagafa.scd
     - /home/skmecs/SuperCollider/interface/keyboard_mpk.scd
     - /home/skmecs/SuperCollider/interface/superDirt_startup.scd

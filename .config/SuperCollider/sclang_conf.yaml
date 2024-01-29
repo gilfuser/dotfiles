@@ -22,6 +22,9 @@ includePaths:
     -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/plugins
     -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/Maths
     -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/miSCellaneous_lib
+    -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/XML
+    -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/wslib
+    -   /home/skmecs/.local/share/SuperCollider/downloaded-quarks/UGenPatterns
 excludePaths:
     []
 postInlineWarnings: false

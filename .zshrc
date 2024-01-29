@@ -173,3 +173,10 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 # alsactl --file ~/.config/asound.state restore
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# bun completions
+[ -s "/home/skmecs/.bun/_bun" ] && source "/home/skmecs/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

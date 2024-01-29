@@ -34,8 +34,8 @@ map(
 )
 map("i", "<leader>O", "<ESC>O<ESC>j", { silent = true, desc = "insert line above. Keeping cursor in line" })
 
-map("n", "<leader>[", "<CMD>bp<CR>", { silent = true, desc = "move to previous buffer" })
-map("n", "<leader>]", "<CMD>bn<CR>", { silent = true, desc = "move to next buffer" })
+map("n", "<leader>k", "<CMD>bp<CR>", { silent = true, desc = "move to previous buffer" })
+map("n", "<leader>j", "<CMD>bn<CR>", { silent = true, desc = "move to next buffer" })
 
 -- Copying the vscode behaviour of making tab splits
 map("n", "<C-\\>", "<CMD>vsplit<CR>", { silent = true, desc = "make vertical split" })
@@ -66,8 +66,7 @@ map("n", "<C-l>", "gt", { noremap = true, silent = true, desc = "move to tab: Ri
 
 -- easyest moving inside splits
 map("n", "<A-H>", "<c-w>h", { noremap = true, silent = true, desc = "move to split: Left" })
-map("n", "<A-J>", "<c-w>k", { noremap = true, silent = true, desc = "move to split: Up" })
-
+map("n", "<A-J>", "<c-w>j", { noremap = true, silent = true, desc = "move to split: Down" })
 map("n", "<A-L>", "<c-w>l", { noremap = true, silent = true, desc = "move to split: Right" })
 
 -- substitute a little bit faster
@@ -138,6 +137,8 @@ map("i", "<A-h>", "<ESC>xhhpi", { silent = true, desc = "move character left" })
 map("x", "<A-l>", "xpv", { silent = true, desc = "move character right" })
 map("x", "<A-h>", "xhhpv", { silent = true, desc = "move character left" })
 
+map("i", "<M-J>", "<ESC>j<ESC>i", {silent = true, desc = "move cursor down in insert mode"})
+
 map("n", "<A-#>", "g;", { silent = true, desc = "go forward to next edit" })
 map("n", "<A-'>", "g,", { silent = true, desc = "go backwards to previous edit" })
 
@@ -170,7 +171,7 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc =
 -- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -- map("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<CR>", { noremap = true, silent = true }) -- not working
-map("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true, desc = '[F]ile [B]rowser' })
+map("n", "<leader>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true, desc = '[F]ile [B]rowser' })
 map("n", "<leader>cm", ":Telescope commands<CR>", { noremap = true, desc = '[C]o[M]mands' })
 map("n", "<leader>cl", ":Telescope colorscheme<CR>", { noremap = true, desc = '[C]o[L]ors' })
 map("n", "<leader>km", ":Telescope keymaps<CR>", { noremap = true, desc = '[K]ey[M]aps' })
@@ -208,10 +209,14 @@ map("n", "<M-/>", "<CMD>HopPattern<CR>", { desc = 'HopPattern is like neovim sea
 
 -- SuperCollider, SCNvim
 local scnvim = require("scnvim")
-map("", "<localleader><Esc>", function() vim.cmd.write() scnvim.map("editor.send_line") end , {desc="SuperCollider send line and save"})
+local function send_line_and_save_buffer()
+    vim.cmd [[call scnvim.editor.send_line]]
+    vim.cmd [[w]]
+end
+map({ "i", "n" }, "<localleader><Esc>", '<Cmd>lua send_line_and_save_buffer()<CR>', { noremap = true, silent = true })
 
 -- Tidal
-map("", "<leader><Esc>", function () vim.cmd.write() vim.cmd(':execute "normal \\<Plug>TidalParagraphSend" ') end )
+map("", "<leader><Esc>", function () vim.cmd.write() vim.cmd.execute('"normal \\<Plug>TidalParagraphSend"') end )
 
 local harpoon = require("harpoon")
 
@@ -229,3 +234,6 @@ map("n", "<M-p>", function() harpoon:list():select(4) end)
 -- Toggle previous & next buffers stored within Harpoon list
 map("n", "<C-S-P>", function() harpoon:list():prev() end)
 map("n", "<C-S-N>", function() harpoon:list():next() end)
+
+map("", "<g-d>", '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', { noremap = true, silent = true })
+

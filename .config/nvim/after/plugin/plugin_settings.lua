@@ -36,9 +36,10 @@ require("scnvim.postwin").on_open:append(function()
 	vim.opt_local.wrap = true
 end)
 
+-- vim.keymap.set("", "<localleader><Esc>", function() "editor.send_line" end , {desc="SuperCollider send line and save"})
 scnvim.setup {
 	keymaps = {
-		-- ["<localleader><Esc>"] = map("editor.send_line", { "i", "n" }),
+		["<localleader><Esc>"] = { map("editor.send_line", { "i", "n" })},
 		["<leader><Esc>"] = {
 			map("editor.send_block", { "i", "n" }),
 			map("editor.send_selection", "x"),
@@ -135,3 +136,7 @@ vim.cmd [[let g:instant_username = "skmecs"]]
 
 require 'colorizer'.setup()
 
+-- Vue language options (volar)
+require 'lspconfig'.volar.setup {
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' }
+}

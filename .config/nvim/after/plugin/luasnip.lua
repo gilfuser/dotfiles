@@ -10,7 +10,7 @@ ls.setup({
 	ext_opts = {
 		[types.choiceNode] = {
 			active = {
-				virt_text = {{"●", "Error" }}
+				virt_text = {{"↓", "Warning" }}
 			}
 		},
 		[types.insertNode] = {
@@ -42,33 +42,38 @@ ls.filetype_extend("all", { "_" })
 require("luasnip.loaders.from_snipmate").load()
 require("luasnip.loaders.from_lua").load()
 -- <c-l> is my expansion key
+--
 -- expand the current item or jump to the next item within the snippet.
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
-  if ls.expand_or_jumpable() then
-    ls.expand_or_jump()
-  end
+--[[ vim.keymap.set({ "i", "s" }, "<C-l>", function()
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
 end, { silent = true })
 
 -- <c-h> is my jump backwards key.
-vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-  if ls.jumpable(-1) then
-    ls.jump(-1)
-  end
+vim.keymap.set({ "i", "s" }, "<C-h>", function()
+	if ls.jumpable(-1) then
+		ls.jump(-1)
+	end
 end, { silent = true })
+]]
 
 -- <c-j> is selecting within a list of options.
-vim.keymap.set("i", "<c-j>", function()
-  if ls.choice_active() then
-    ls.change_choice(1)
-  end
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
 end)
-vim.keymap.set("i", "<c-k>", function()
-  if ls.choice_active() then
-    ls.change_choice(-1)
-  end
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
+	if ls.choice_active() then
+		ls.change_choice(-1)
+	end
 end)
 
-vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
+vim.keymap.set({"i"}, "<C-l>", function() ls.expand() end, {silent = true})
+-- vim.keymap.set({"i", "s"}, "<C-l>", function() ls.jump( 1) end, {silent = true})
+-- vim.keymap.set({"i", "s"}, "<C-k>", function() ls.jump(-1) end, {silent = true})
 
+vim.keymap.set("i", "<C-Enter>", require "luasnip.extras.select_choice")
 -- shorcut to source my luasnips file again, which will reload my snippets
 vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")
